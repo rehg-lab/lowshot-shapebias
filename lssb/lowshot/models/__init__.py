@@ -1,0 +1,6 @@
+from .image_simpleshot_classifier import ImageClassifier as ImageSimpleshotClassifier
+from .ptcld_simpleshot_classifier import PtcldClassifier as PtcldSimpleshotClassifier
+from .joint_simpleshot_classifier import JointClassifier as JointSimpleshotClassifier
+
+from .image_feat_classifier import ImageClassifier as ImageFeatClassifier
+from .joint_feat_classifier import JointClassifier as JointFEATClassifier

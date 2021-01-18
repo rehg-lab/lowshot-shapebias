@@ -1,0 +1,39 @@
+model_type: "ImageFeatClassifier"
+exp_name: "shapenet-feat-1-shot-10-way-resnet18"
+log_dir: "shapenet-feat-logs"
+dataset: "shapenet"
+modality: "image"
+ls_val_hparams:
+    n_ls_val_iters: 200
+    n_ls_val_ways: 10
+    n_ls_val_shots: 1
+    n_ls_val_queries: 15
+ls_test_hparams:
+    n_ls_test_iters: 5000
+    n_ls_test_ways: [10, 20]
+    n_ls_test_shots: [1]
+    n_ls_test_queries: 15
+    val_metric: "euclidean"
+train_hparams:
+    n_ls_train_iters: 100
+    n_ls_train_ways: 10
+    n_ls_train_shots: 1
+    n_ls_train_queries: 15
+    val_freq: 1
+    max_epochs: 200
+    learning_rate: 0.0002
+    lr_multiplier: 10
+    step: 40
+    weight_decay: 0.0005
+    lr_gamma: 0.5
+    gpus: 1
+    use_train_sampler: false
+    train_metric: "euclidean"
+    balance: 0.01
+num_workers: 12
+use_aug: true
+### FEAT ARGS
+encoder_path: "pretrained_models/simpleshot/shapenet/image-only/resnet18-shapenet-simpleshot/version_0/checkpoints/epoch=61_val_acc=0.646.ckpt"
+use_euclidean: true
+temperature1: 64.0
+temperature2: 64.0

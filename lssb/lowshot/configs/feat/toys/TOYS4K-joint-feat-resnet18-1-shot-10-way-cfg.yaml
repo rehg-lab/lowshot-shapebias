@@ -1,0 +1,41 @@
+model_type: "JointFEATClassifier"
+exp_name: "toys-joint-feat-1-shot-10-way-resnet18"
+log_dir: "toys-feat-logs"
+dataset: "toys"
+modality: "image+shape_embedding"
+ls_val_hparams:
+    n_ls_val_iters: 200
+    n_ls_val_ways: 10
+    n_ls_val_shots: 1
+    n_ls_val_queries: 10
+ls_test_hparams:
+    n_ls_test_iters: 5000
+    n_ls_test_ways: [10, 20, 30]
+    n_ls_test_shots: [1]
+    n_ls_test_queries: 10
+    val_metric: "euclidean"
+train_hparams:
+    n_ls_train_iters: 100
+    n_ls_train_ways: 10
+    n_ls_train_shots: 1
+    n_ls_train_queries: 10
+    val_freq: 1
+    max_epochs: 100
+    learning_rate: 0.0002
+    lr_multiplier: 10
+    step: 40
+    weight_decay: 0.0005
+    lr_gamma: 0.5
+    gpus: 1
+    use_train_sampler: false
+    train_metric: "euclidean"
+    balance: 0.01
+num_workers: 10
+use_aug: true
+### FEAT ARGS
+feat_dict_file: "dgcnn_ptcld_feat_dict.npz"
+encoder_path_resnet: "pretrained_models/simpleshot/toys/shape-biased/joint-toys-pairwise-simpleshot/version_0/checkpoints/epoch=291_val_acc=0.603.ckpt"
+encoder_path_dgcnn: ""
+use_euclidean: true
+temperature1: 64.0
+temperature2: 64.0

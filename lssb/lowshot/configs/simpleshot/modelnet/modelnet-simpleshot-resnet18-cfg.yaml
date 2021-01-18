@@ -1,0 +1,30 @@
+model_type: "ImageSimpleshotClassifier"
+exp_name: "resnet18-modelnet-simpleshot"
+log_dir: "modelnet-simpleshot-logs"
+dataset: "modelnet"
+architecture: "resnet18"
+num_classes: 20
+modality: "image"
+ls_val_hparams:
+    n_ls_val_iters: 500
+    n_ls_val_ways: 5
+    n_ls_val_shots: 1
+    n_ls_val_queries: 15
+    val_metric: "cosine"
+ls_test_hparams:
+    n_ls_test_iters: 5000
+    n_ls_test_ways: [5, 10]
+    n_ls_test_shots: [1, 5]
+    n_ls_test_queries: 15
+train_hparams:
+    optimizer: "sgd"
+    val_freq: 1
+    max_epochs: 400
+    batch_size: 256
+    learning_rate: 0.01
+    weight_decay: 0.0001
+    lr_gamma: 0.1
+    gpus: 1
+    use_train_sampler: true
+num_workers: 16
+use_aug: true

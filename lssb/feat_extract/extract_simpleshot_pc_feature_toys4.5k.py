@@ -1,0 +1,88 @@
+import torch
+import argparse
+import numpy as np
+
+from lssb.lowshot.models.ptcld_simpleshot_classifier import PtcldClassifier
+from lssb.data.toys import Toys4K
+from lssb.feat_extract.utils import get_multiple_features
+from torch.utils.data import DataLoader
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--ckpt_path',
+                    metavar='ckpt_path',
+                    type=str)
+
+args = parser.parse_args()
+
+def main():
+
+    ckpt = torch.load(args.ckpt_path)
+
+
+    model = PtcldClassifier.load_from_checkpoint(args.ckpt_path)
+    model.eval()
+    model.net = model.net.cuda()
+
+    extra_args = {'use_random_SO3_rotation':False,
+                  'num_points':1024}
+
+
+    json=''
+    batch_size=64
+
+    train_dataset = Toys4K(
+        split='train', 
+        modality='ptcld',
+        use_aug=False,
+        extra_args=extra_args
+    )
+
+    val_dataset = Toys4K(
+        split='val', 
+        modality='ptcld',
+        use_aug=False,
+        extra_args=extra_args
+    )
+
+    test_dataset = Toys4K(
+        split='test', 
+        modality='ptcld',
+        use_aug=False,
+        extra_args=extra_args
+    )
+
+    train_loader = DataLoader(
+            train_dataset, 
+            shuffle=False, 
+            num_workers=5, 
+            batch_size=batch_size, 
+            drop_last=False)
+    
+    val_loader = DataLoader(
+            val_dataset, 
+            shuffle=False, 
+            num_workers=5, 
+            batch_size=batch_size, 
+            drop_last=False)
+
+    test_loader = DataLoader(
+            test_dataset, 
+            shuffle=False, 
+            num_workers=5, 
+            batch_size=batch_size, 
+            drop_last=False)
+
+    print("Feature extraction for training set")
+    train = get_multiple_features(model, train_loader, 10)
+    print("Feature extraction for validation set")
+    val = get_multiple_features(model, val_loader, 10)
+    print("Feature extraction for testing set")
+    test = get_multiple_features(model, test_loader, 10)
+
+    output_dict = {**train, **val, **test}
+    
+    np.savez('dgcnn_ptcld_feat_dict.npz', feat_dict=output_dict)
+
+if __name__ == "__main__":
+    main()

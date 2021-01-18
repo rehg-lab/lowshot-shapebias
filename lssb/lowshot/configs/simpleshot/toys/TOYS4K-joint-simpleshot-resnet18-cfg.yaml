@@ -1,0 +1,33 @@
+model_type: "JointSimpleshotClassifier"
+exp_name: "joint-toys-pairwise-simpleshot"
+log_dir: "toys-simpleshot-logs"
+dataset: "toys"
+num_classes: 40
+modality: "image+shape_embedding"
+ls_val_hparams:
+    n_ls_val_iters: 500
+    n_ls_val_ways: 5
+    n_ls_val_shots: 1
+    n_ls_val_queries: 10
+    val_metric: "cosine"
+ls_test_hparams:
+    n_ls_test_iters: 5000
+    n_ls_test_ways: [5, 10, 20, 30]
+    n_ls_test_shots: [1, 5]
+    n_ls_test_queries: 10
+train_hparams:
+    optimizer: "adam"
+    val_freq: 1
+    max_epochs: 400
+    batch_size: 256
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    lr_gamma: 0.1
+    gpus: 1
+    use_train_sampler: true
+num_workers: 8
+use_aug: true
+## model specific items
+add_pairwise_dist: true
+feat_dict_file: "dgcnn_ptcld_feat_dict.npz"
+feat_dim: 512
