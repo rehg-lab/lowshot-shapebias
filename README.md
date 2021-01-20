@@ -2,19 +2,20 @@
 
 ![alt text](images/teaser.png)
 
-This is a repository containing PyTorch code for [Using Shape to Categorize: Low-Shot Learning with an Explicit Shape Bias](https://arxiv.link.here). You can find instructions for for testing pre-trained models in the paper and training your own models in the instructions below.
+This is a repository containing PyTorch code for [Using Shape to Categorize: Low-Shot Learning with an Explicit Shape Bias](https://arxiv.org/abs/2101.07296). You can find instructions for for testing pre-trained models in the paper and training your own models in the instructions below.
 
 If you use our work in your research, please consider citing 
 
 ```bibtex
-@misc{stojanov2020learning,
-      title={Using Shape to Categorize: Low-Shot Learning with an Explicit Shape Bias}, 
+@article{stojanov2020lssb,
+      title={Using Shape to Categorize: Low-Shot Learning with an Explicit Shape Bias},
       author={Stefan Stojanov and Anh Thai and James M. Rehg},
-      year={2020},
-      eprint={to-add},
+      year={2021},
+      eprint={2101.07296},
       archivePrefix={arXiv},
       primaryClass={cs.CV}
 }
+
 ```
 
 ### Project Members
