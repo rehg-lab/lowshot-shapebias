@@ -151,17 +151,7 @@ class DGCNN_cls(nn.Module):
                 output['embed'] = feat3
         
             output['logits'] = logits
-
-        elif self.mode == 'triplet':
-            x = self.linear1(feat1)
-            embedding = F.normalize(x, p=2)
-           
-            output['embed':embedding]
-        
-        elif self.mode == 'proto':
-            output['embed'] = feat1
-
-        
+       
         return output
 
 if __name__ == "__main__":
