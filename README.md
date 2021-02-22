@@ -76,13 +76,7 @@ Make sure you install PyTorch with a compatible CUDA version. This repository ha
 
 ## Datasets
 
-You can download the data we used for the experiments for ModelNet, ShapeNet and our Toys4K dataset using the following scripts:
-
-```
-bash scripts/download_modelnet.sh
-bash scripts/download_shapenet.sh
-bash scripts/download_toys.sh
-```
+You can download the data we used for the experiments for ModelNet, ShapeNet and our Toys4K dataset using `download_data.sh`.
 
 Attribution information about our new dataset is available [here](https://www.dropbox.com/s/ucngbdest9of8rz/attibution_info.txt?). Please do not distribute the data made available here in any way, and please make sure you follow the respective ModelNet and ShapeNet licenses.
 
