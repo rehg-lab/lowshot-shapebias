@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # download features
-wget https://www.dropbox.com/s/fl5vakwmjbmo4o9/features.tar
-
+wget https://www.dropbox.com/s/1lnu1is0uoj8w2e/features.tar
 tar -xf features.tar
 
 rm features.tar

@@ -1,21 +1,18 @@
-# LSSB: Low-Shot learning with Shape Bias
+# LSSB: Low-Shot learning with Shape Bias - CVPR2021
 
 ![alt text](images/teaser.png)
 
-This is a repository containing PyTorch code for [Using Shape to Categorize: Low-Shot Learning with an Explicit Shape Bias](https://arxiv.org/abs/2101.07296). You can find instructions for for testing pre-trained models in the paper and training your own models in the instructions below.
+This is a repository containing PyTorch code for [Using Shape to Categorize: Low-Shot Learning with an Explicit Shape Bias](https://openaccess.thecvf.com/content/CVPR2021/html/Stojanov_Using_Shape_To_Categorize_Low-Shot_Learning_With_an_Explicit_Shape_CVPR_2021_paper.html). You can find instructions for for testing pre-trained models in the paper and training your own models in the instructions below.
 
 If you use our work in your research, please consider citing 
 
 ```bibtex
-@article{stojanov2020lssb,
+@article{stojanov21cvpr,
       title={Using Shape to Categorize: Low-Shot Learning with an Explicit Shape Bias},
       author={Stefan Stojanov and Anh Thai and James M. Rehg},
-      year={2021},
-      eprint={2101.07296},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+      booktitle = {CVPR},
+      year      = {2021}
 }
-
 ```
 
 ### Project Members
@@ -30,34 +27,34 @@ If you have any questions regarding the paper, data or code, please email Stefan
 
 ## Results - Shape Bias Improves Low-Shot Generalization
 
-The following results are averaged over three runs
+The following results are averaged over three runs for FEAT and five runs for SimpleShot
 
 ### ModelNet
 
 | Method          | 1-shot 5-way  | 5-shot 5-way  | 1-shot 10-way  | 5-shot 10-way  |
 | -------------   |:-------------:|:-------------:|:--------------:|:--------------:|
-| SimpleShot      |58.23	    |73.99          |45.24           |62.15           |
-| LSSB SimpleShot |60.87 | 73.2 | 48.39 | 61.81
-| FEAT            |57.57 | 71.04| 44.40 | 60.19
-| LSSB FEAT       |61.66 | 73.36| 50.02 |	61.41
+| SimpleShot      |58.99	    |74.29          |45.82           |62.73           |
+| LSSB SimpleShot |57.57          |74.39          |49.84           |64.21           |
+| FEAT            |58.30          |71.54          |45.41           |60.44           |
+| LSSB FEAT       |62.84          |74.84          |51.49           |63.80           |
 
 ### ShapeNet
 
 | Method          | 1-shot 5-way  | 5-shot 5-way  | 1-shot 10-way  | 5-shot 10-way  | 1-shot 20-way  | 5-shot 20-way  |
 | -------------   |:-------------:|:-------------:|:--------------:|:--------------:|:--------------:|:--------------:|
-| SimpleShot      | 64.77	| 79.38	| 50.97| 	68.26| 	38.93| 	56.5
-| LSSB SimpleShot | 69.41	| 80.44	| 56.68	| 70.05	| 45.11	| 59.42
-| FEAT            | 66.53	| 79.74	| 52.8| 	68.78| 	40.5	| 57.23
-| LSSB FEAT       |70.2| 	80.44| 	57.59	| 70.42| 	45.86| 	59.34
+| SimpleShot      | 66.73	    | 80.93	        | 53.37          | 70.32          | 41.09          | 59.09          |
+| LSSB SimpleShot | 67.50	    | 81.30	        | 54.99	       | 71.24	      | 43.60	     | 61.03          |
+| FEAT            | 67.81	    | 81.45	        | 55.69          | 71.74          | 44.44	     | 61.46          |
+| LSSB FEAT       | 70.24         | 80.95         | 58.45          | 70.95          | 47.03          | 60.43          |
 
 ### Toys4K
 
 | Method          | 1-shot 5-way  | 5-shot 5-way  | 1-shot 10-way  | 5-shot 10-way  | 1-shot 20-way  | 5-shot 20-way  |
 | -------------   |:-------------:|:-------------:|:--------------:|:--------------:|:--------------:|:--------------:|
-| SimpleShot      |69.38	| 83.77	| 55.89	| 73.61	| 43.58| 	62.65
-| LSSB SimpleShot | 69.77	| 80.66	| 57.17| 	70.16	| 45.91| 	59.39
-| FEAT            | 70.86	| 84.19	| 57.49| 	74.38	| 45.25| 	63.94
-| LSSB FEAT       |70.32	| 80.92	| 58.61	| 71.06| 	47.24	| 60.23
+| SimpleShot      |68.78	    | 83.69	        | 55.22          | 73.58          | 43.05          | 62.64          |
+| LSSB SimpleShot |70.96	    | 81.33	        | 58.47          | 70.81	      | 46.96          | 60.30          |
+| FEAT            |70.86	    | 84.13	        | 57.15          | 74.29	      | 44.84          | 63.65          |
+| LSSB FEAT       |71.58	    | 81.45	        | 59.09          | 71.00          | 47.45          | 59.98          |
 
 
 ## Installation
