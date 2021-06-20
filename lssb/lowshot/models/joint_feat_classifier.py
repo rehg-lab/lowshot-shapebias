@@ -12,7 +12,6 @@ from torch.nn import functional as F
 
 from lssb.lowshot.models.base_feat_classifier import FeatBase
 from lssb.lowshot.models.joint_simpleshot_classifier import JointClassifier as j_simpleshot
-from lssb.lowshot.models.ptcld_simpleshot_classifier import PtcldClassifier as p_simpleshot
 #data loading
 
 class JointClassifier(FeatBase):
@@ -21,11 +20,7 @@ class JointClassifier(FeatBase):
         super().__init__(hparams)
         
         self.extra_args = {
-                'num_points':1024,
-                'use_normals':False,
-                'use_random_SO3_rotation':False, 
-                "feat_dict_file":self.hparams.feat_dict_file,
-                "add_abc":False}
+                "feat_dict_file":self.hparams.feat_dict_file}
 
         self.hparams = hparams
     
@@ -59,7 +54,11 @@ class JointClassifier(FeatBase):
         # [1,2,3,4,1,2,3,4] rather than
         # [1,1,1,1,2,2,2,2,3,3,3,3] etc
         
-        shots = (img_embed[0:n_shots * n_ways] + pc_embed[0:n_shots*n_ways])/2
+        if self.hparams.use_pc_for_lowshot:
+            shots = (img_embed[0:n_shots * n_ways] + pc_embed[0:n_shots*n_ways])/2
+        else:
+            shots = img_embed[0:n_shots * n_ways]
+
         queries = img_embed[n_shots*n_ways:]
 
         q_idx = torch.arange(n_queries).repeat_interleave(n_ways) \
@@ -105,8 +104,8 @@ class JointClassifier(FeatBase):
                  'lr': self.hparams.learning_rate \
                          * self.hparams.lr_multiplier
              }],
-            momentum=0.9,
-            nesterov=True,
+            #momentum=0.9,
+            #nesterov=True,
             weight_decay=self.hparams.weight_decay)
         
         lr_scheduler = torch.optim.lr_scheduler.StepLR(

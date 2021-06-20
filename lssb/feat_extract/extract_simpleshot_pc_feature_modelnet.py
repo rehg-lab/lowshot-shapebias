@@ -1,6 +1,7 @@
 import torch
 import argparse
 import numpy as np
+import os
 
 from lssb.lowshot.models.ptcld_simpleshot_classifier import PtcldClassifier
 from lssb.data.modelnet import ModelNet
@@ -78,10 +79,20 @@ def main():
     val = get_multiple_features(model, val_loader, 10)
     print("Feature extraction for testing set")
     test = get_multiple_features(model, test_loader, 10)
-
-    output_dict = {**train, **val, **test}
     
-    np.savez('dgcnn_ptcld_feat_dict.npz', feat_dict=output_dict)
+    output_dict = {}
+
+    output_dict['train'] = train
+    output_dict['val'] = val
+    output_dict['test'] = test
+    
+    out_dir = 'modelnet_features'
+
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
+
+    np.savez(os.path.join(out_dir, 'dgcnn_ptcld_feat_dict.npz'), 
+             feat_dict=output_dict)
 
 if __name__ == "__main__":
     main()

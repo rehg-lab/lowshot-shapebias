@@ -2,6 +2,7 @@ model_type: "ImageFeatClassifier"
 exp_name: "shapenet-feat-1-shot-5-way-resnet18"
 log_dir: "shapenet-feat-logs"
 dataset: "shapenet"
+architecture: "resnet18"
 modality: "image"
 ls_val_hparams:
     n_ls_val_iters: 200
@@ -33,7 +34,8 @@ train_hparams:
 num_workers: 12
 use_aug: true
 ### FEAT ARGS
-encoder_path: "pretrained_models/simpleshot/shapenet/image-only/resnet18-shapenet-simpleshot/version_0/checkpoints/epoch=61_val_acc=0.646.ckpt"
+encoder_path: "./pretrained_models/simpleshot/shapenet/image-only/resnet18-shapenet-simpleshot/version_0/checkpoints/epoch=130_val_acc=0.630.ckpt"
 use_euclidean: true
 temperature1: 64.0
 temperature2: 64.0
+use_seed: false

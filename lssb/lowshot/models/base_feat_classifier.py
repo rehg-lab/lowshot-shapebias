@@ -188,21 +188,33 @@ class FeatBase(pl.LightningModule):
         return {}
     
     def configure_optimizers(self): 
-        
-        optimizer = torch.optim.SGD(
-            [{
-                'params': self.encoder.parameters(), 
-                'lr':self.hparams.learning_rate
-             },
-             {
-                 'params': self.feat.parameters(), 
-                 'lr': self.hparams.learning_rate \
-                         * self.hparams.lr_multiplier
-             }],
-            momentum=0.9,
-            nesterov=True,
-            weight_decay=self.hparams.weight_decay
-        )
+               
+        if self.hparams.architecture == 'conv4':
+            optimizer = torch.optim.Adam(
+                [{
+                    'params': self.encoder.parameters(), 
+                    'lr':self.hparams.learning_rate
+                 },
+                 {
+                     'params': self.feat.parameters(), 
+                     'lr': self.hparams.learning_rate \
+                             * self.hparams.lr_multiplier
+                 }])  
+        else:
+            optimizer = torch.optim.SGD(
+                [{
+                    'params': self.encoder.parameters(), 
+                    'lr':self.hparams.learning_rate
+                 },
+                 {
+                     'params': self.feat.parameters(), 
+                     'lr': self.hparams.learning_rate \
+                             * self.hparams.lr_multiplier
+                 }],
+                momentum=0.9,
+                nesterov=True,
+                weight_decay=self.hparams.weight_decay
+            )
     
         lr_scheduler = torch.optim.lr_scheduler.StepLR(
                 optimizer, 

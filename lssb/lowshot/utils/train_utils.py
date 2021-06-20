@@ -14,6 +14,7 @@ from lssb.data.sampler import CategoriesSampler
 from lssb.data.modelnet import ModelNet
 from lssb.data.toys import Toys4K
 from lssb.data.shapenet import ShapeNet55
+from lssb.data.mImNetLoader import DatasetFolder
 
 def get_dataset(dataset, modality, use_aug, extra_args=None):
     
@@ -83,6 +84,17 @@ def get_dataset(dataset, modality, use_aug, extra_args=None):
             use_aug=False,
             extra_args=extra_args
         )
+
+
+    if dataset == 'mini-imagenet':
+        if modality != 'image':
+            raise Exception("mini imagenet is an image only dataset")
+
+        train_dataset = DatasetFolder('train', use_aug)
+
+        val_dataset = DatasetFolder('val', False)
+
+        test_dataset = DatasetFolder('test', False) 
 
     print("# training samples:", len(train_dataset), train_dataset.use_aug)
     print("# validation samples:", len(val_dataset), val_dataset.use_aug)

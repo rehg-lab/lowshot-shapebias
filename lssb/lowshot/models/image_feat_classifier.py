@@ -8,6 +8,7 @@ from torch.nn import functional as F
 
 from lssb.lowshot.models.base_feat_classifier import FeatBase
 from lssb.lowshot.models.image_simpleshot_classifier import ImageClassifier as simpleshot
+from lssb.lowshot.utils.feat_utils import ConvNet
 
 class ImageClassifier(FeatBase):
 
@@ -20,13 +21,27 @@ class ImageClassifier(FeatBase):
 
         print("Loading pretrained encoder from", 
                 self.hparams.encoder_path)
+
         pt_model = simpleshot.load_from_checkpoint(
                 self.hparams.encoder_path)
 
         self.encoder = pt_model.net
 
+        #below is for recreating performance with conv4
+        '''
+        self.encoder = ConvNet() 
+        model_dict = self.encoder.state_dict()
+        pretrained_dict = torch.load(self.hparams.encoder_path)['params']
+        #if args.backbone_class == 'ConvNet':
+        #    pretrained_dict = {'encoder.'+k: v for k, v in pretrained_dict.items()}
+        pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
+        print(pretrained_dict.keys())
+        model_dict.update(pretrained_dict)
+        self.encoder.load_state_dict(model_dict)
+        '''
+
         self.feat = nets.feat(
-                encoder='resnet18',
+                encoder=self.hparams.architecture,
                 use_euclidean=self.hparams.use_euclidean,
                 temp1=self.hparams.temperature1,
                 temp2=self.hparams.temperature2,
@@ -39,12 +54,14 @@ class ImageClassifier(FeatBase):
         image = x['image']
         
         embed = self.encoder(image)['embed']
+        #below is for recreating performance with conv4
+        #embed = self.encoder(image)#['embed']
         
         #for feat we need to make the queries into 
         # [1,2,3,4,1,2,3,4] rather than
         # [1,1,1,1,2,2,2,2,3,3,3,3] etc which is what our loader gives us
         
-        shots = embed[:n_shots * n_ways]
+        shots = embed[0:n_shots * n_ways]
         queries = embed[n_shots * n_ways:]
 
         q_idx = torch.arange(n_queries).repeat_interleave(n_ways) \

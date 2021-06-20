@@ -1,6 +1,7 @@
 import torch
 import argparse
 import numpy as np
+import os
 
 from lssb.lowshot.models.ptcld_simpleshot_classifier import PtcldClassifier
 from lssb.data.toys import Toys4K
@@ -28,7 +29,6 @@ def main():
                   'num_points':1024}
 
 
-    json=''
     batch_size=64
 
     train_dataset = Toys4K(
@@ -80,9 +80,19 @@ def main():
     print("Feature extraction for testing set")
     test = get_multiple_features(model, test_loader, 10)
 
-    output_dict = {**train, **val, **test}
+    output_dict = {}
+
+    output_dict['train'] = train
+    output_dict['val'] = val
+    output_dict['test'] = test
     
-    np.savez('dgcnn_ptcld_feat_dict.npz', feat_dict=output_dict)
+    out_dir = 'toys_features'
+
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
+
+    np.savez(os.path.join(out_dir, 'dgcnn_ptcld_feat_dict.npz'), 
+             feat_dict=output_dict)
 
 if __name__ == "__main__":
     main()

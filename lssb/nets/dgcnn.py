@@ -103,10 +103,6 @@ class DGCNN_cls(nn.Module):
             self.dp2 = nn.Dropout(p=dropout)
             self.linear3 = nn.Linear(256, num_classes)
         
-        elif self.mode == 'triplet':
-            self.linear1 = nn.Linear(emb_dims, 256)
-        
-
     def forward(self, x):
         batch_size = x.size(0)
         x = get_graph_feature(x, k=self.k)      # (batch_size, 3, num_points) -> (batch_size, 3*2, num_points, k)
@@ -129,8 +125,6 @@ class DGCNN_cls(nn.Module):
 
         x = self.conv5(x)                       # (batch_size, 64+64+128+256, num_points) -> (batch_size, emb_dims, num_points)
         feat1 = F.adaptive_max_pool1d(x, 1).view(batch_size, -1)           # (batch_size, emb_dims, num_points) -> (batch_size, emb_dims)
-        #x2 = F.adaptive_avg_pool1d(x, 1).view(batch_size, -1)           # (batch_size, emb_dims, num_points) -> (batch_size, emb_dims)
-        #x = torch.cat((x1, x2), 1)              # (batch_size, emb_dims*2)
         
         output = {}
         if self.mode == 'simpleshot':
@@ -158,5 +152,5 @@ if __name__ == "__main__":
     model = DGCNN_cls(feat_level=1).cuda()
     arr = torch.rand(50, 3, 1024).cuda()
     output = model(arr)
+    
     import pdb; pdb.set_trace()
-

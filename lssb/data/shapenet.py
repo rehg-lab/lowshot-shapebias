@@ -39,6 +39,7 @@ class ShapeNet55(torch.utils.data.Dataset):
             self.data_dict = json.load(f)[split]
          
         self.classes = sorted(self.data_dict.keys())
+        self.split = split
 
         print(split, 'dataset has', self.classes)
 
@@ -127,6 +128,9 @@ class ShapeNet55(torch.utils.data.Dataset):
                     os.path.join(self.BASE_PATH, 'features', self.extra_args['feat_dict_file']), 
                     allow_pickle=True
                 )['feat_dict'].item()
+            
+            self.embedding_dict = self.embedding_dict[self.split]
+
 
         return objects, labels
 

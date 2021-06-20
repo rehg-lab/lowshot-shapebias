@@ -109,7 +109,7 @@ class ResNet(nn.Module):
 
     def __init__(self, block, layers, num_classes=1000, zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
-                 norm_layer=None, feat_dim=512, embed_dim=512, mode=None):
+                 norm_layer=None, feat_dim=512, mode=None):
         super(ResNet, self).__init__()
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
@@ -167,6 +167,10 @@ class ResNet(nn.Module):
         #######################################
 
         self.mode = mode
+
+        #######################################
+        ########### MODIFICATIONS #############
+        #######################################
 
     def _make_layer(self, block, planes, blocks, stride=1, dilate=False):
         norm_layer = self._norm_layer
@@ -237,7 +241,7 @@ def _resnet(arch, block, layers, pretrained, progress, **kwargs):
     return model
 
 def resnet10(pretrained=False, progress=True, **kwargs):
-    return _resnet('resnet18', BasicBlock, [1, 1, 1, 1], pretrained, progress,
+    return _resnet('resnet10', BasicBlock, [1, 1, 1, 1], pretrained, progress,
                    **kwargs)
 
 def resnet18(pretrained=False, progress=True, **kwargs):

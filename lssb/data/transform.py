@@ -1,6 +1,8 @@
 import torchvision.transforms as transforms
 import numpy as np
 import torch
+
+import torchvision.transforms.functional as TF
 import PIL
 
 ### modelnet image augmentation
@@ -18,13 +20,12 @@ class ModelNetImageAug(object):
                                          resample=PIL.Image.BILINEAR,
                                          fillcolor=(255,255,255))
 
-        self.random_flip = transforms.RandomHorizontalFlip(p=1.0)
+        self.random_flip = transforms.RandomHorizontalFlip(p=0.5)
         self.totensor = transforms.ToTensor()
 
     def apply_random_affine(self, img):
         t_img = self.random_affine(img)
         t = self.totensor(t_img)
-        t[t==0]=1
         t_img = transforms.ToPILImage(mode='RGB')(t)
 
         return t_img

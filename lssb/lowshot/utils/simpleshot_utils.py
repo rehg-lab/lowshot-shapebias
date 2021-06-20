@@ -119,8 +119,7 @@ def run_lowshot_testing(
     print()
     print()
      
-    #un_list = Parallel(n_jobs=10, backend='loky', verbose=1)(
-    un_list = Parallel(n_jobs=10, backend='sequential', verbose=1)(
+    un_list = Parallel(n_jobs=10, backend='loky', verbose=1)(
                 delayed(test_func)
                     (feature=feature,
                      label=label, 

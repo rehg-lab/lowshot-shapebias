@@ -1,4 +1,4 @@
-from pytorch_lightning import Trainer
+from pytorch_lightning import Trainer, seed_everything
 from argparse import ArgumentParser, Namespace
 from pytorch_lightning.loggers import TensorBoardLogger
 
@@ -46,6 +46,16 @@ def main():
     hparams = flatten_dict(hparams)
     hparams = Namespace(**hparams)
 
+    if hparams.use_seed==True:
+        print("Training with fixed random seed")
+        seed_everything(1994)
+        benchmark=False
+        deterministic=True
+    else:
+        benchmark=True
+        deterministic=False
+
+
     model = getattr(lowshot_models, hparams.model_type)(hparams)
     
     log_dir = hparams.log_dir
@@ -80,7 +90,8 @@ def main():
         max_epochs=hparams.max_epochs,
         check_val_every_n_epoch=hparams.val_freq,
         checkpoint_callback=checkpoint_callback,
-        benchmark=True,
+        benchmark=benchmark,
+        deterministic=deterministic,
         logger=logger
     )
     

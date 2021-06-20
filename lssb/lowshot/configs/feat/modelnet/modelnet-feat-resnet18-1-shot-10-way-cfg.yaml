@@ -1,6 +1,7 @@
 model_type: "ImageFeatClassifier"
 exp_name: "modelnet-feat-1-shot-10-way-resnet18"
 log_dir: "modelnet-feat-output"
+architecture: "resnet18"
 dataset: "modelnet"
 modality: "image"
 ls_val_hparams:
@@ -33,7 +34,8 @@ train_hparams:
 num_workers: 12
 use_aug: true
 ### FEAT ARGS
-encoder_path: "pretrained_models/simpleshot/modelnet/image-only/resnet18-modelnet-simpleshot/version_0/checkpoints/epoch=326_val_acc=0.668.ckpt"
+encoder_path: "./pretrained_models/simpleshot/modelnet/image-only/resnet18-modelnet-simpleshot/version_0/checkpoint/epoch=301_val_acc=0.672.ckpt"
 use_euclidean: true
 temperature1: 64.0
 temperature2: 64.0
+use_seed: false

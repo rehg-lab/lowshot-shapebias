@@ -56,7 +56,7 @@ class JointClassifier(SimpleShotBase):
         gt_embed = outputs['gt_embed']
         
         # compute MSE loss between embeddings
-        mse_loss = F.mse_loss(embed, gt_embed) 
+        mse_loss = F.mse_loss(embed, gt_embed, reduction=self.hparams.loss_reduction) 
         
         # \matcal{L}_2 in the paper
         if self.hparams.add_pairwise_dist:
@@ -77,7 +77,7 @@ class JointClassifier(SimpleShotBase):
                                              diagonal=1) == 1]
             
             # compute MSE loss between the pairiwse distances
-            pairwise_dist_term = F.mse_loss(vals1, vals2)
+            pairwise_dist_term = F.mse_loss(vals1, vals2, reduction=self.hparams.loss_reduction)
             mse_loss += pairwise_dist_term
         
         loss = mse_loss
@@ -95,7 +95,7 @@ class JointClassifier(SimpleShotBase):
         labels = batch['labels']
         gt_embed = batch['gt_embed']  
         embed = model_output['embed']
-
+        
         output['labels'] = labels
         output['gt_embed'] = gt_embed
         output['embed'] = embed
@@ -106,13 +106,19 @@ class JointClassifier(SimpleShotBase):
         labels = outputs['labels']
         gt_embed = outputs['gt_embed']
         embed = outputs['embed']
-        idx = self.hparams.n_ls_val_ways \
-               * self.hparams.n_ls_val_shots
        
-        # combining image and shape embedding
-        joint_embed = embed.detach().clone() 
-        joint_embed[:idx] = (joint_embed[:idx] + gt_embed[:idx])/2
-        
+        if self.hparams.use_pc_for_lowshot:
+            idx = self.hparams.n_ls_val_ways \
+                   * self.hparams.n_ls_val_shots
+           
+            # combining image and shape embedding
+            joint_embed = embed.detach().clone() 
+            joint_embed[0:idx,:] = (joint_embed[0:idx,:] + gt_embed[0:idx,:])/2
+
+        else:
+            joint_embed = embed
+
+
         return {'labels': labels,
                 'gt_embed':gt_embed,
                 'joint_embed':joint_embed,
@@ -135,14 +141,23 @@ class JointClassifier(SimpleShotBase):
             # combining image and shape embedding, just for the shots and 
             # not for the queries
 
-            joint_embed = img_embed.detach().clone()
-            joint_embed[0:idx] = (joint_embed[0:idx] + shape_embed[0:idx])/2
+            if self.hparams.use_pc_for_lowshot:
+                joint_embed = img_embed.detach().clone()
+                joint_embed[0:idx,:] = (joint_embed[0:idx,:] + shape_embed[0:idx,:])/2
+            else:
+                joint_embed = img_embed
+
+
         elif loader_idx == 0:
             ### train loader
             img_embed = output['embed']
             shape_embed = batch['gt_embed']
 
-            joint_embed = (img_embed + shape_embed)/2
+            if self.hparams.use_pc_for_lowshot:
+                joint_embed = (img_embed + shape_embed)/2
+            else:
+                joint_embed = img_embed
+
        
         return {
                 'embed':joint_embed,
