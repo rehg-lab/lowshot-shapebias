@@ -16,7 +16,7 @@ If you use our work in your research, please consider citing
 ```
 
 ### Project Members
-- [Stefan Stojanov](https://stefanstojanov.com) - Georgia Institute of Technology (PhD Student)
+- [Stefan Stojanov](https://sstojanov.github.io) - Georgia Institute of Technology (PhD Student)
 - [Anh Thai](https://anhthai1997.wordpress.com) - Georgia Institute of Technology (PhD Student)
 - [James M. Rehg](http://rehg.org) - Georgia Institute of Technology
 
