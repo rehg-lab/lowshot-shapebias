@@ -1,0 +1,43 @@
+{
+    "light_parameters": {
+        "area_strength": 30,
+        "area_light_location": [0,0,5],
+        "area_light_rotation": [0,0,0],
+        "area_size_x": 10,
+        "area_size_y": 10,
+        "light_temperature": 6000
+    },
+    "render_parameters": {
+        "use_persistent_data": true,
+        "transparent_min_bounces": 2,
+        "color_mode": "RGBA",
+        "max_bounces": 2,
+        "render_samples": 10,
+        "use_spatial_splits": true,
+        "render_tile_y": 300,
+        "transparent_max_bounces": 2,
+        "rendering_device": "GPU",
+        "use_caustics_refractive": false,
+        "resolution_percentage": 100,
+        "denoising_radius": 5,
+        "glossy_bounces": 2,
+        "min_bounces": 2,
+        "transmission_bounces": 2,
+        "use_film_transparent": true,
+        "use_denoising": true,
+        "render_tile_x": 300,
+        "use_caustics_reflective": false,
+        "resolution": 300
+    },
+    "camera":{
+        "focal_length_mm":50,
+        "distance_units":2.2,
+        "sensor_size_mm":32
+    },
+    "gen_params":{
+        "elev_range":[45, 45],
+        "azim_range":[315,315],
+        "n_points":1,
+        "debug":true
+    }
+}
