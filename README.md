@@ -23,7 +23,10 @@ If you use our work in your research, please consider citing
 ### Contact
 If you have any questions regarding the paper, data or code, please email Stefan Stojanov at [sstojanov@gatech.edu](mailto:sstojanov@gatech.edu)
 
-### 
+## Toys4K 3D Object Dataset
+![myimage](https://user-images.githubusercontent.com/13421307/144886151-2d04660f-816b-4f40-9b7e-ed1851c1f2c6.gif)
+
+Details for downloading and rendering the Toys4K 3D object dataset are available in the [Toys4K directory](toys4k) of this repository.
 
 ## Results - Shape Bias Improves Low-Shot Generalization
 
@@ -75,7 +78,7 @@ Make sure you install PyTorch with a compatible CUDA version. This repository ha
 
 You can download the data we used for the experiments for ModelNet, ShapeNet and our Toys4K dataset using `download_data.sh`.
 
-Attribution information about our new dataset is available [here](https://www.dropbox.com/s/ucngbdest9of8rz/attibution_info.txt?). Please do not distribute the data made available here in any way, and please make sure you follow the respective ModelNet and ShapeNet licenses.
+Attribution information about our new dataset is available [here](https://www.dropbox.com/s/1hjmoh5kkcq7p7u/toys4k_attribution.pdf). Please do not distribute the data made available here in any way, and please make sure you follow the respective ModelNet and ShapeNet licenses.
 
 The approximate sizes for the datasets are 7.4GB for ModelNet, 11GB for ShapeNet55 and 4.1GB for Toys4K
 
